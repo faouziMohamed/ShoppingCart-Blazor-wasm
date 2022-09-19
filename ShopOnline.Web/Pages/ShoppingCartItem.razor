@@ -1,0 +1,26 @@
+﻿<div class="row mb-4">
+  <div class=col-md-4>
+    <img src=@Item.ProductImageURL width=300 class=img-thumbnail/>
+  </div>
+  <div class=col-md-8>
+    <h5>@Item.ProductName</h5>
+    <div class=mb-4>@Item.ProductDescription</div>
+    <span>Price: <b>@Item.Price.ToString("c")</b></span>
+    <div>
+      <button
+        class="btn btn-danger sm"
+        @onclick="() => DeleteCartItemClicked(Item.Id)">
+        <span class="oi oi-trash"></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+@code
+{
+  [Parameter]
+  public CartItemDto Item { get; set; }
+
+  [Parameter]
+  public Func<int, Task> DeleteCartItemClicked { get; set; }
+}

@@ -28,7 +28,7 @@ internal class ShoppingCartService : IShoppingCartService
     throw new ApplicationException($"Http status code: {response.StatusCode}, message -{message}");
   }
 
-  public async Task<IEnumerable<CartItemDto>?> GetItemsAsync(int userId)
+  public async Task<List<CartItemDto>?> GetItemsAsync(int userId)
   {
     var response = await _httpClient.GetAsync($"api/shoppingCart/{userId}/GetItems");
 
@@ -36,13 +36,28 @@ internal class ShoppingCartService : IShoppingCartService
     {
       if (response.StatusCode == HttpStatusCode.NoContent)
       {
-        return Enumerable.Empty<CartItemDto>();
+        return Enumerable.Empty<CartItemDto>().ToList();
       }
 
-      return await response.Content.ReadFromJsonAsync<IEnumerable<CartItemDto>>();
+      return await response.Content.ReadFromJsonAsync<List<CartItemDto>>();
     }
 
     string message = await response.Content.ReadAsStringAsync();
     throw new ApplicationException($"Http status code: {response.StatusCode}, message -{message}");
+  }
+
+  public async Task<CartItemDto?> DeleteItemAsync(int cartId)
+  {
+    var response = await _httpClient.DeleteAsync($"api/shoppingCart/{cartId}");
+
+    if (response.IsSuccessStatusCode)
+    {
+      if (response.StatusCode == HttpStatusCode.NoContent) return default;
+      return await response.Content.ReadFromJsonAsync<CartItemDto>();
+    }
+
+    string message = await response.Content.ReadAsStringAsync();
+    throw new ApplicationException($"Http status code: {response.StatusCode}, message -{message}");
+
   }
 }

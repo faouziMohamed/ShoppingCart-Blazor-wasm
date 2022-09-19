@@ -45,7 +45,16 @@ public sealed class ShoppingCartRepository : IShoppingCartRepository
   }
   public async Task<CartItem> DeleteItem(int id)
   {
-    throw new NotImplementedException();
+    var item = await _context.CartItems.FindAsync(id);
+
+    if (item == null)
+    {
+      return default;
+    }
+
+    _context.CartItems.Remove(item);
+    await _context.SaveChangesAsync();
+    return item;
   }
   public async Task<CartItem?> GetItem(int id)
   {

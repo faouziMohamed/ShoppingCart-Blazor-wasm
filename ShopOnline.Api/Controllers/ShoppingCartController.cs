@@ -90,4 +90,26 @@ public class ShoppingCartController : ControllerBase
       return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
     }
   }
+  [HttpDelete("{id:int}")]
+  public async Task<ActionResult> DeleteItem(int id)
+  {
+    try
+    {
+      var cartItem = await _shoppingCartRepository.DeleteItem(id);
+
+      if (cartItem == null)
+      {
+        return NotFound();
+      }
+
+      var product = await _productRepository.GetItemByIdAsync(cartItem.ProductId);
+      if (product == null) throw new Exception("No products exist in the system");
+      return Ok(cartItem.ConverterDto(product));
+
+    }
+    catch (Exception e)
+    {
+      return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+    }
+  }
 }

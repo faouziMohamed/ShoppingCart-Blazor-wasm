@@ -1,6 +1,4 @@
-﻿@inherits DisplayProductsBase
-
-@foreach (var product in Products)
+﻿@foreach (var product in Products)
 {
   <div class="col-md-3 mb-2">
     <a href="/ProductDetails/@product.Id">
@@ -15,4 +13,10 @@
       </div>
     </a>
   </div>
+}
+
+@code
+{
+  [Parameter]
+  public IList<ProductDto> Products { get; set; }
 }
