@@ -30,8 +30,7 @@ public class ProductDetailsBase : ComponentBase
     }
     catch (Exception e)
     {
-      Console.WriteLine(e);
-      throw;
+      ErrorMessage = e.Message;
     }
 
 

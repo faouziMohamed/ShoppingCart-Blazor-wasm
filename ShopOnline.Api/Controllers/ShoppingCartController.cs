@@ -79,7 +79,7 @@ public class ShoppingCartController : ControllerBase
 
       if (product == null)
       {
-        throw new Exception($"Something wen wrong when attempting to retrieve product (productId: {itemToAddDto.ProductId})");
+        throw new Exception($"Something wen wrong when attempting to retrieve product (cartItemId: {itemToAddDto.ProductId})");
       }
 
       var newCartItemDto = newCartItem.ConverterDto(product);
@@ -96,6 +96,29 @@ public class ShoppingCartController : ControllerBase
     try
     {
       var cartItem = await _shoppingCartRepository.DeleteItem(id);
+
+      if (cartItem == null)
+      {
+        return NotFound();
+      }
+
+      var product = await _productRepository.GetItemByIdAsync(cartItem.ProductId);
+      if (product == null) throw new Exception("No products exist in the system");
+      return Ok(cartItem.ConverterDto(product));
+
+    }
+    catch (Exception e)
+    {
+      return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+    }
+  }
+
+  [HttpPatch("{cartItemId:int}")]
+  public async Task<ActionResult<CartItemDto>> UpdateItem(int cartItemId, [FromBody] CartItemQtyUpdateDto itemToUpdateDto)
+  {
+    try
+    {
+      var cartItem = await _shoppingCartRepository.UpdateQty(cartItemId, itemToUpdateDto);
 
       if (cartItem == null)
       {

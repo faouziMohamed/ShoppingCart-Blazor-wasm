@@ -11,4 +11,9 @@ public class CartItemDto
   public decimal Price { get; set; }
   public decimal TotalPrice { get; set; }
   public int Qty { get; set; }
+  public override string ToString()
+  {
+    return
+      $"Id: {Id}, ProductId: {ProductId}, CartId: {CartId}, ProductName: {ProductName}, ProductDescription: {ProductDescription}, ProductImageURL: {ProductImageURL}, Price: {Price}, TotalPrice: {TotalPrice}, Qty: {Qty}";
+  }
 }

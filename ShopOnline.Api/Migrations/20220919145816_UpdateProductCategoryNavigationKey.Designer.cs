@@ -11,8 +11,8 @@ using ShopOnline.Api.Data;
 namespace ShopOnline.Api.Migrations
 {
     [DbContext(typeof(ShopOnlineDbContext))]
-    [Migration("20220918175042_ConfigureForeignKey")]
-    partial class ConfigureForeignKey
+    [Migration("20220919145816_UpdateProductCategoryNavigationKey")]
+    partial class UpdateProductCategoryNavigationKey
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -447,13 +447,13 @@ namespace ShopOnline.Api.Migrations
 
             modelBuilder.Entity("ShopOnline.Api.Entities.Product", b =>
                 {
-                    b.HasOne("ShopOnline.Api.Entities.ProductCategory", "ProductCategory")
+                    b.HasOne("ShopOnline.Api.Entities.ProductCategory", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ProductCategory");
+                    b.Navigation("Category");
                 });
 #pragma warning restore 612, 618
         }

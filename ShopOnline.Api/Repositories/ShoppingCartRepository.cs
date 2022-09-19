@@ -39,9 +39,18 @@ public sealed class ShoppingCartRepository : IShoppingCartRepository
     await _context.SaveChangesAsync();
     return result.Entity;
   }
-  public async Task<CartItem> UpdateQty(int id, CartItemQtyUpdateDto itemQtyUpdateDto)
+  public async Task<CartItem> UpdateQty(int cartItemId, CartItemQtyUpdateDto itemQtyUpdateDto)
   {
-    throw new NotImplementedException();
+    var item = await _context.CartItems.FindAsync(cartItemId);
+
+    if (item == null)
+    {
+      return default;
+    }
+
+    item.Qty = itemQtyUpdateDto.Qty;
+    await _context.SaveChangesAsync();
+    return item;
   }
   public async Task<CartItem> DeleteItem(int id)
   {

@@ -50,7 +50,8 @@ static public class DtoConversions
       ProductDescription = product.Description,
       ProductImageURL = product.ImageURL,
       Price = product.Price,
-      Qty = product.Qty,
+      CartId = cartItem.Id,
+      Qty = cartItem.Qty,
       TotalPrice = product.Price*cartItem.Qty
     };
   }

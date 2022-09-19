@@ -6,6 +6,10 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <Optimize>False</Optimize>
+    </PropertyGroup>
+
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.9" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.9" PrivateAssets="all" />
@@ -13,11 +17,5 @@
 
     <ItemGroup>
         <ProjectReference Include="..\ShopOnline.Models\ShopOnline.Models.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Content Include="Pages\ShoppingCartBase.cs">
-        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      </Content>
     </ItemGroup>
 </Project>

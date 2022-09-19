@@ -18,7 +18,7 @@ public class ShopOnlineDbContext : DbContext
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     //Products
-    //Beauty Category
+    //Beauty ProductCategory
     modelBuilder.Entity<Product>().HasData(new Product
       {
         Id = 1,
@@ -84,7 +84,7 @@ public class ShopOnlineDbContext : DbContext
       }
     );
 
-    //Electronics Category
+    //Electronics ProductCategory
     modelBuilder.Entity<Product>().HasData(new Product
       {
         Id = 6,
@@ -162,7 +162,7 @@ public class ShopOnlineDbContext : DbContext
       }
     );
 
-    //Furniture Category
+    //Furniture ProductCategory
     modelBuilder.Entity<Product>().HasData(new Product
       {
         Id = 12,
@@ -235,7 +235,7 @@ public class ShopOnlineDbContext : DbContext
       }
     );
 
-    //Shoes Category
+    //Shoes ProductCategory
     modelBuilder.Entity<Product>().HasData(new Product
       {
         Id = 18,

@@ -1,15 +1,25 @@
 ﻿<div class="row mb-4">
-  <div class=col-md-4>
-    <img src=@Item.ProductImageURL width=300 class=img-thumbnail/>
+  <div class="col-md-4">
+    <img src="@Item.ProductImageURL" width="300" class="img-thumbnail"/>
   </div>
-  <div class=col-md-8>
+  <div class="col-md-8">
     <h5>@Item.ProductName</h5>
-    <div class=mb-4>@Item.ProductDescription</div>
-    <span>Price: <b>@Item.Price.ToString("c")</b></span>
+    <div class="mb-4">@Item.ProductDescription</div>
+    <span>
+      Price: <b>@Item.Price.ToString("c")</b>
+      <input
+        @oninput="() => UpdateQtyInput()"
+        type="number" @bind="@Item.Qty"/>
+      <button class="btn btn-info btn-sm update-qty"
+              data-id="@Item.Id"
+              @onclick="() => UpdateCartItemClicked()">
+        Update Quantity
+      </button>
+    </span>
     <div>
       <button
         class="btn btn-danger sm"
-        @onclick="() => DeleteCartItemClicked(Item.Id)">
+        @onclick="() => DeleteCartItemClicked()">
         <span class="oi oi-trash"></span>
       </button>
     </div>
@@ -22,5 +32,11 @@
   public CartItemDto Item { get; set; }
 
   [Parameter]
-  public Func<int, Task> DeleteCartItemClicked { get; set; }
+  public Action UpdateCartItemClicked { get; set; }
+
+  [Parameter]
+  public Action DeleteCartItemClicked { get; set; }
+
+  [Parameter]
+  public Action UpdateQtyInput { get; set; }
 }

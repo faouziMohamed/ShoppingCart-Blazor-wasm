@@ -12,26 +12,32 @@ else if (ErrorMessage != null)
 }
 else
 {
-  @if (ShoppingCartItems.Count < 1)
+  @if (ShoppingCartItems.Count > 0)
   {
-    <h4>There are currently no items in your shopping cart</h4>
-    return;
-  }
-  <h3 class="mb-5">Shopping Cart</h3>
-  <div class="row mb-5">
-    <div class="col-md-9">
-      @foreach (var item in ShoppingCartItems)
-      {
-        <ShoppingCartItem Item="@item" DeleteCartItemClicked="@DeleteCartItem_Click"/>
-      }
-    </div>
-    <div class="col-md-3">
-      <div class="mt-2">
-        <div>Total - </div>
-        <a href="#" class="btn btn-primary">
-          <span class="oi oi-credit-card"/>&nbsp;Procees to Checkout
-        </a>
+    <h3 class="mb-5">Shopping Cart</h3>
+    <div class="row mb-5">
+      <div class="col-md-9">
+        @foreach (var Item in ShoppingCartItems)
+        {
+          <ShoppingCartItem
+            Item="@Item"
+            UpdateCartItemClicked="() => UpdateQtyCartItem_click(Item.Id, Item.Qty)"
+            DeleteCartItemClicked="() => DeleteCartItem_Click(Item.Id)"
+            UpdateQtyInput="() => UpdateQty_Input(Item.Id)"/>
+        }
+      </div>
+      <div class="col-md-3">
+        <div class="mt-2">
+          <div>Total - (@TotalQuantity items)&nbsp;&nbsp;<b>@TotalPrice</b></div>
+          <a href="#" class="btn btn-primary">
+            <span class="oi oi-credit-card"></span>&nbsp;Procees to Checkout
+          </a>
+        </div>
       </div>
     </div>
-  </div>
+  }
+  else
+  {
+    <h4>There are currently no items in your shopping cart</h4>
+  }
 }
