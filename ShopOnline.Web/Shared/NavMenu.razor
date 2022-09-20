@@ -1,10 +1,10 @@
 ﻿@implements IDisposable
-@inject IShoppingCartService shoppingCartService
+@inject IShoppingCartService ShoppingCartService
 <div class="top-row ps-3 navbar navbar-dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="">ShopOnline.Web</a>
     <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-      <span class="navbar-toggler-icon"></span>
+      <span class="navbar-toggler-icon"/>
     </button>
   </div>
 </div>
@@ -13,39 +13,30 @@
   <nav class="flex-column">
     <div class="nav-item px-3">
       <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-        <span class="oi oi-home" aria-hidden="true"></span> Home
+        <span class="oi oi-home" aria-hidden="true"/> Home
       </NavLink>
     </div>
-    <div class="nav-item px-3">
-      <NavLink class="nav-link" href="counter">
-        <span class="oi oi-plus" aria-hidden="true"></span> Counter
-      </NavLink>
-    </div>
-    <div class="nav-item px-3">
-      <NavLink class="nav-link" href="fetchdata">
-        <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-      </NavLink>
-    </div>
+    <ProductCategoriesNavMenu/>
     <div class="nav-item px-3 d-sm-none">
       <NavLink class="nav-link" href="ShoppingCart">
-        <span class="oi oi-cart" aria-hidden="true"></span> Shopping Car (@ShoppingCartItemCount)
+        <span class="oi oi-cart" aria-hidden="true"/> Shopping Cart (@ShoppingCartItemCount)
       </NavLink>
     </div>
   </nav>
 </div>
 
 @code {
-  private bool collapseNavMenu = true;
+  private bool _collapseNavMenu = true;
 
-  private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+  private string? NavMenuCssClass => _collapseNavMenu ? "collapse" : null;
 
   private void ToggleNavMenu()
   {
-    collapseNavMenu = !collapseNavMenu;
+    _collapseNavMenu = !_collapseNavMenu;
   }
   protected override void OnInitialized()
   {
-    shoppingCartService.OnShoppingCartChanged += ShoppingCartChanged;
+    ShoppingCartService.OnShoppingCartChanged += ShoppingCartChanged;
   }
   private void ShoppingCartChanged(int totalQty)
   {
@@ -55,6 +46,6 @@
   private int ShoppingCartItemCount { get; set; }
   public void Dispose()
   {
-    shoppingCartService.OnShoppingCartChanged -= ShoppingCartChanged;
+    ShoppingCartService.OnShoppingCartChanged -= ShoppingCartChanged;
   }
 }

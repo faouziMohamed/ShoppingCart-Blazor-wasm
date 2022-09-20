@@ -31,7 +31,7 @@ public class ShoppingCartController : ControllerBase
 
       IEnumerable<Product?>? products = await _productRepository.GetItemsAsync();
       if (products == null) throw new Exception("No products exist in the system");
-      return Ok(cartItems.ConverterDto(products));
+      return Ok(cartItems.ConverterToDto(products));
     }
     catch (Exception e)
     {
@@ -54,7 +54,7 @@ public class ShoppingCartController : ControllerBase
       var product = await _productRepository.GetItemByIdAsync(cartItem.ProductId);
       if (product == null) throw new Exception("No products exist in the system");
 
-      return Ok(cartItem.ConverterDto(product));
+      return Ok(cartItem.ConverterToDto(product));
 
     }
     catch (Exception e)
@@ -82,7 +82,7 @@ public class ShoppingCartController : ControllerBase
         throw new Exception($"Something wen wrong when attempting to retrieve product (cartItemId: {itemToAddDto.ProductId})");
       }
 
-      var newCartItemDto = newCartItem.ConverterDto(product);
+      var newCartItemDto = newCartItem.ConverterToDto(product);
       return CreatedAtAction(actionName: nameof(GetItem), routeValues: new { id = newCartItemDto.Id }, newCartItemDto);
     }
     catch (Exception e)
@@ -104,7 +104,7 @@ public class ShoppingCartController : ControllerBase
 
       var product = await _productRepository.GetItemByIdAsync(cartItem.ProductId);
       if (product == null) throw new Exception("No products exist in the system");
-      return Ok(cartItem.ConverterDto(product));
+      return Ok(cartItem.ConverterToDto(product));
 
     }
     catch (Exception e)
@@ -127,7 +127,7 @@ public class ShoppingCartController : ControllerBase
 
       var product = await _productRepository.GetItemByIdAsync(cartItem.ProductId);
       if (product == null) throw new Exception("No products exist in the system");
-      return Ok(cartItem.ConverterDto(product));
+      return Ok(cartItem.ConverterToDto(product));
 
     }
     catch (Exception e)

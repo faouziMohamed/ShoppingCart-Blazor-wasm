@@ -20,8 +20,8 @@ public class ProductsBase : ComponentBase
     try
     {
       Products = await ProductService.GetItemsAsync();
-      List<CartItemDto>? shoppingCart = await ShoppingCartService.GetItemsAsync(HardCoded.UserId);
-      int totalQty = shoppingCart.Sum(x => x.Qty);
+      List<CartItemDto> shoppingCart = await ShoppingCartService.GetItemsAsync(HardCoded.UserId);
+      int totalQty = shoppingCart.Sum(static x => x.Qty);
       ShoppingCartService.RaiseEventOnShoppingCartChanged(totalQty);
     }
     catch (Exception e)

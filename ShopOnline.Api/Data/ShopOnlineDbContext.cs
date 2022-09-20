@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopOnline.Api.Entities;
 
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+
 namespace ShopOnline.Api.Data;
 
 public class ShopOnlineDbContext : DbContext
@@ -10,11 +12,11 @@ public class ShopOnlineDbContext : DbContext
 
   }
 
-  public DbSet<Product?> Products { get; set; }
-  public DbSet<User> Users { get; set; }
-  public DbSet<Cart> Carts { get; set; }
-  public DbSet<ProductCategory?> ProductCategories { get; set; }
-  public DbSet<CartItem> CartItems { get; set; }
+  public DbSet<Product> Products { get; set; } = null!;
+  public DbSet<User> Users { get; set; } = null!;
+  public DbSet<Cart> Carts { get; set; } = null!;
+  public DbSet<ProductCategory> ProductCategories { get; set; } = null!;
+  public DbSet<CartItem> CartItems { get; set; } = null!;
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     //Products
@@ -28,7 +30,6 @@ public class ShopOnlineDbContext : DbContext
         Price = 100,
         Qty = 100,
         CategoryId = 1
-
       }
     );
 
@@ -346,26 +347,33 @@ public class ShopOnlineDbContext : DbContext
     modelBuilder.Entity<ProductCategory>().HasData(new ProductCategory
       {
         Id = 1,
-        Name = "Beauty"
+        Name = "Beauty",
+        IconCSS = "fas fa-spa"
       }
     );
 
     modelBuilder.Entity<ProductCategory>().HasData(new ProductCategory
       {
         Id = 2,
-        Name = "Furniture"
+        Name = "Furniture",
+        IconCSS = "fas fa-couch"
       }
     );
 
     modelBuilder.Entity<ProductCategory>().HasData(new ProductCategory
       {
         Id = 3,
-        Name = "Electronics"
+        Name = "Electronics",
+        IconCSS = "fas fa-headphones"
       }
     );
 
     modelBuilder.Entity<ProductCategory>().HasData(new ProductCategory
-      { Id = 4, Name = "Shoes" }
+      {
+        Id = 4,
+        Name = "Shoes",
+        IconCSS = "fas fa-shoe-prints"
+      }
     );
   }
 }

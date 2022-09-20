@@ -5,17 +5,17 @@ namespace ShopOnline.Api.Extensions;
 
 static public class DtoConversions
 {
-  static public IEnumerable<ProductDto> ConverterDto(this IEnumerable<Product> products,
+  static public IEnumerable<ProductDto> ConverterToDto(this IEnumerable<Product> products,
     IEnumerable<ProductCategory> productCategories)
   {
     return (
         from product in products
         join productCategory in productCategories on product.CategoryId equals productCategory.Id
-        select product.ConverterDto(productCategory)
+        select product.ConverterToDto(productCategory)
       )
-      .ToList(); // ProductDto(product, productCategory)).ToList();
+      .ToList();
   }
-  static public ProductDto ConverterDto(this Product product, ProductCategory productCategory)
+  static public ProductDto ConverterToDto(this Product product, ProductCategory productCategory)
   {
     return new ProductDto
     {
@@ -30,17 +30,17 @@ static public class DtoConversions
     };
   }
 
-  static public IEnumerable<CartItemDto> ConverterDto(this IEnumerable<CartItem> cartItems,
+  static public IEnumerable<CartItemDto> ConverterToDto(this IEnumerable<CartItem> cartItems,
     IEnumerable<Product> products)
   {
     return (
         from cartItem in cartItems
         join product in products on cartItem.ProductId equals product.Id
-        select cartItem.ConverterDto(product))
+        select cartItem.ConverterToDto(product))
       .ToList();
   }
 
-  static public CartItemDto ConverterDto(this CartItem cartItem, Product product)
+  static public CartItemDto ConverterToDto(this CartItem cartItem, Product product)
   {
     return new CartItemDto
     {
@@ -53,6 +53,21 @@ static public class DtoConversions
       CartId = cartItem.Id,
       Qty = cartItem.Qty,
       TotalPrice = product.Price*cartItem.Qty
+    };
+  }
+
+  static public List<ProductCategoryDto> ConverterToDto(this IEnumerable<ProductCategory> productCategories)
+  {
+    return (from category in productCategories select category.ConvertToDto()).ToList();
+  }
+  static public ProductCategoryDto ConvertToDto(this ProductCategory category)
+  {
+
+    return new ProductCategoryDto
+    {
+      Id = category.Id,
+      Name = category.Name,
+      IconCSS = category.IconCSS
     };
   }
 }

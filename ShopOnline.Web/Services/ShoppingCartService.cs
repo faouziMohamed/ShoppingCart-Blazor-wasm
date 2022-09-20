@@ -32,7 +32,7 @@ internal class ShoppingCartService : IShoppingCartService
     throw new ApplicationException($"Http status code: {response.StatusCode}, message -{message}");
   }
 
-  public async Task<List<CartItemDto>?> GetItemsAsync(int userId)
+  public async Task<List<CartItemDto>> GetItemsAsync(int userId)
   {
     var response = await _httpClient.GetAsync($"api/shoppingCart/{userId}/GetItems");
 
@@ -43,7 +43,8 @@ internal class ShoppingCartService : IShoppingCartService
         return Enumerable.Empty<CartItemDto>().ToList();
       }
 
-      return await response.Content.ReadFromJsonAsync<List<CartItemDto>>();
+      var items = await response.Content.ReadFromJsonAsync<List<CartItemDto>>();
+      return items ?? new List<CartItemDto>();
     }
 
     string message = await response.Content.ReadAsStringAsync();

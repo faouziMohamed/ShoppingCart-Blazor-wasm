@@ -15,8 +15,8 @@ public class ProductDetailsBase : ComponentBase
   [Inject]
   public IShoppingCartService ShoppingCartService { get; set; }
 
-  public ProductDto Product { get; set; }
-  public string ErrorMessage { get; set; }
+  protected ProductDto Product { get; set; }
+  protected string ErrorMessage { get; set; }
 
   [Inject]
   public NavigationManager NavigationManager { get; set; }

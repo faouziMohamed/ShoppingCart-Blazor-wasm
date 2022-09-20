@@ -1,9 +1,8 @@
 ﻿@page "/ShoppingCart"
 @inherits ShoppingCartBase
-
 @if (ShoppingCartItems == null && ErrorMessage == null)
 {
-  <DisplaySpinner/>
+  <displayspinner/>
 }
 else if (ErrorMessage != null)
 {
@@ -12,24 +11,25 @@ else if (ErrorMessage != null)
 }
 else
 {
-  @if (ShoppingCartItems.Count > 0)
+  @if (ShoppingCartItems?.Count > 0)
   {
     <h3 class="mb-5">Shopping Cart</h3>
     <div class="row mb-5">
       <div class="col-md-9">
-        @foreach (var Item in ShoppingCartItems)
+        @foreach (var item in ShoppingCartItems)
         {
-          <ShoppingCartItem
-            Item="@Item"
+          <shoppingcartitem
+            Item="@item"
             UpdateCartItemClicked="() => UpdateQtyCartItem_click(Item.Id, Item.Qty)"
             DeleteCartItemClicked="() => DeleteCartItem_Click(Item.Id)"
             UpdateQtyInput="() => UpdateQty_Input(Item.Id)"/>
         }
       </div>
       <div class="col-md-3">
+        <h5>Cart Summary</h5>
         <div class="mt-2">
           <div>Total - (@TotalQuantity items)&nbsp;&nbsp;<b>@TotalPrice</b></div>
-          <a href="#" class="btn btn-primary">
+          <a href="Checkout" class="btn btn-primary">
             <span class="oi oi-credit-card"></span>&nbsp;Procees to Checkout
           </a>
         </div>

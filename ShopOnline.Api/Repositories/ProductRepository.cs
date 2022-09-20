@@ -12,11 +12,11 @@ public sealed class ProductRepository : IProductRepository
   {
     _context = context;
   }
-  public async Task<IEnumerable<Product?>> GetItemsAsync()
+  public async Task<List<Product>> GetItemsAsync()
   {
     return await _context.Products.ToListAsync();
   }
-  public async Task<IEnumerable<ProductCategory?>> GetCategoriesAsync()
+  public async Task<List<ProductCategory>> GetCategoriesAsync()
   {
     return await _context.ProductCategories.ToListAsync();
   }

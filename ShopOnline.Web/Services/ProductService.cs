@@ -13,7 +13,7 @@ public sealed class ProductService : IProductService
     _httpClient = httpClient;
 
   }
-  public async Task<IEnumerable<ProductDto>?> GetItemsAsync()
+  public async Task<IEnumerable<ProductDto>> GetItemsAsync()
   {
     try
     {
@@ -23,10 +23,11 @@ public sealed class ProductService : IProductService
       {
         if (response.StatusCode == HttpStatusCode.NoContent)
         {
-          return default;
+          return Enumerable.Empty<ProductDto>();
         }
 
-        return await response.Content.ReadFromJsonAsync<IEnumerable<ProductDto>>();
+        var productsDto = await response.Content.ReadFromJsonAsync<IEnumerable<ProductDto>>();
+        return productsDto ?? Enumerable.Empty<ProductDto>();
       }
 
       string message = await response.Content.ReadAsStringAsync();
@@ -54,5 +55,23 @@ public sealed class ProductService : IProductService
 
     string message = await response.Content.ReadAsStringAsync();
     throw new Exception(message);
+  }
+  public async Task<List<ProductCategoryDto>> GetProductCategoriesAsync()
+  {
+    var response = await _httpClient.GetAsync("api/Product/GetProductCategories");
+
+    if (response.IsSuccessStatusCode)
+    {
+      if (response.StatusCode == HttpStatusCode.NoContent)
+      {
+        return new List<ProductCategoryDto>();
+      }
+
+      var productCategories = await response.Content.ReadFromJsonAsync<List<ProductCategoryDto>>();
+      return productCategories ?? new List<ProductCategoryDto>();
+    }
+
+    string message = await response.Content.ReadAsStringAsync();
+    throw new Exception($"Http Status Code: {response.StatusCode} Message:  {message}");
   }
 }
