@@ -22,10 +22,16 @@ public sealed class ProductRepository : IProductRepository
   }
   public async Task<Product?> GetItemByIdAsync(int id)
   {
-    return await _context.Products.FindAsync(id);
+    return await _context.Products.Include(p => p.ProductCategory).FirstOrDefaultAsync(p => p.Id == id);
   }
   public async Task<ProductCategory?> GetCategoryByIdAsync(int id)
   {
     return await _context.ProductCategories.SingleOrDefaultAsync(c => c.Id == id);
+  }
+  public async Task<List<Product>> GetItemsByCategoryAsync(int categoryId)
+  {
+    return await (from product in _context.Products
+      where product.CategoryId == categoryId
+      select product).ToListAsync();
   }
 }

@@ -81,4 +81,28 @@ public class ProductController : ControllerBase
       );
     }
   }
+// get items by category
+  [HttpGet("{categoryId:int}/GetItemsByCategory")]
+  public async Task<ActionResult<IEnumerable<ProductDto>>> GetItemsByCategory(int categoryId)
+  {
+    try
+    {
+      List<Product> products = await _productRepository.GetItemsByCategoryAsync(categoryId);
+      List<ProductCategory> productCategories = await _productRepository.GetCategoriesAsync();
+
+      if (!products.Any() || !productCategories.Any())
+      {
+        return NotFound();
+      }
+
+      IEnumerable<ProductDto> productDtos = products.ConverterToDto(productCategories);
+      return Ok(productDtos);
+    }
+    catch (Exception ex)
+    {
+      return StatusCode(StatusCodes.Status500InternalServerError,
+        "Error retrieving data from the database"
+      );
+    }
+  }
 }

@@ -8,4 +8,5 @@ public interface IProductRepository
   Task<List<ProductCategory>> GetCategoriesAsync();
   Task<Product?> GetItemByIdAsync(int id);
   Task<ProductCategory?> GetCategoryByIdAsync(int id);
+  Task<List<Product>> GetItemsByCategoryAsync(int categoryId);
 }

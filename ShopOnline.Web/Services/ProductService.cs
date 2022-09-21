@@ -74,4 +74,22 @@ public sealed class ProductService : IProductService
     string message = await response.Content.ReadAsStringAsync();
     throw new Exception($"Http Status Code: {response.StatusCode} Message:  {message}");
   }
+  public async Task<List<ProductDto>> GetProductsByCategoryAsync(int categoryId)
+  {
+    var response = await _httpClient.GetAsync($"api/Product/{categoryId}/GetItemsByCategory");
+
+    if (response.IsSuccessStatusCode)
+    {
+      if (response.StatusCode == HttpStatusCode.NoContent)
+      {
+        return new List<ProductDto>();
+      }
+
+      var products = await response.Content.ReadFromJsonAsync<List<ProductDto>>();
+      return products ?? new List<ProductDto>();
+    }
+
+    string message = await response.Content.ReadAsStringAsync();
+    throw new Exception($"Http Status Code: {response.StatusCode} Message:  {message}");
+  }
 }

@@ -1,0 +1,21 @@
+﻿@page "/ProductsByCategory/{CategoryId:int}"
+@inherits ProductsByCategoryBase
+
+@if (!Products.Any() && ErrorMessage == null)
+{
+  <DisplaySpinner/>
+}
+else if (ErrorMessage != null)
+{
+  <displayerror ErrorMessage="@ErrorMessage"/>
+}
+else
+{
+  <h3>Products (@CategoryName)</h3>
+  @if (Products.Any())
+  {
+    <div class="row mt-3">
+      <DisplayProducts Products="@Products"/>
+    </div>
+  }
+}
