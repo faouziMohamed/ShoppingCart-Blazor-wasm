@@ -13,7 +13,7 @@ public sealed class ProductService : IProductService
     _httpClient = httpClient;
 
   }
-  public async Task<IEnumerable<ProductDto>> GetItemsAsync()
+  public async Task<List<ProductDto>> GetItemsAsync()
   {
     try
     {
@@ -23,11 +23,11 @@ public sealed class ProductService : IProductService
       {
         if (response.StatusCode == HttpStatusCode.NoContent)
         {
-          return Enumerable.Empty<ProductDto>();
+          return new List<ProductDto>();
         }
 
-        var productsDto = await response.Content.ReadFromJsonAsync<IEnumerable<ProductDto>>();
-        return productsDto ?? Enumerable.Empty<ProductDto>();
+        var productsDto = await response.Content.ReadFromJsonAsync<List<ProductDto>>();
+        return productsDto ?? new List<ProductDto>();
       }
 
       string message = await response.Content.ReadAsStringAsync();

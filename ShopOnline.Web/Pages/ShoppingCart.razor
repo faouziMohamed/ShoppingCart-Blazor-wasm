@@ -1,8 +1,8 @@
 ﻿@page "/ShoppingCart"
 @inherits ShoppingCartBase
-@if (ShoppingCartItems == null && ErrorMessage == null)
+@if (!ShoppingCartItems.Any() && ErrorMessage == null)
 {
-  <displayspinner/>
+  <DisplaySpinner/>
 }
 else if (ErrorMessage != null)
 {
@@ -18,11 +18,11 @@ else
       <div class="col-md-9">
         @foreach (var item in ShoppingCartItems)
         {
-          <shoppingcartitem
+          <ShoppingCartItem
             Item="@item"
-            UpdateCartItemClicked="() => UpdateQtyCartItem_click(Item.Id, Item.Qty)"
-            DeleteCartItemClicked="() => DeleteCartItem_Click(Item.Id)"
-            UpdateQtyInput="() => UpdateQty_Input(Item.Id)"/>
+            UpdateCartItemClicked="() => UpdateQtyCartItem_click(item.Id, item.Qty)"
+            DeleteCartItemClicked="() => DeleteCartItem_Click(item.Id)"
+            UpdateQtyInput="() => UpdateQty_Input(item.Id)"/>
         }
       </div>
       <div class="col-md-3">

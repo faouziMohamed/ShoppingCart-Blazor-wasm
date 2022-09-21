@@ -5,17 +5,11 @@ namespace ShopOnline.Api.Extensions;
 
 static public class DtoConversions
 {
-  static public IEnumerable<ProductDto> ConverterToDto(this IEnumerable<Product> products,
-    IEnumerable<ProductCategory> productCategories)
+  static public IEnumerable<ProductDto> ConverterToDto(this IEnumerable<Product> products)
   {
-    return (
-        from product in products
-        join productCategory in productCategories on product.CategoryId equals productCategory.Id
-        select product.ConverterToDto(productCategory)
-      )
-      .ToList();
+    return (from product in products select product.ConverterToDto()).ToList();
   }
-  static public ProductDto ConverterToDto(this Product product, ProductCategory productCategory)
+  static public ProductDto ConverterToDto(this Product product)
   {
     return new ProductDto
     {
@@ -25,8 +19,8 @@ static public class DtoConversions
       ImageURL = product.ImageURL,
       Price = product.Price,
       Qty = product.Qty,
-      CategoryId = product.CategoryId,
-      CategoryName = productCategory.Name
+      CategoryId = product.ProductCategory.Id,
+      CategoryName = product.ProductCategory.Name
     };
   }
 

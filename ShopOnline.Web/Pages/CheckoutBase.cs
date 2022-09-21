@@ -13,6 +13,9 @@ public class CheckoutBase : ComponentBase
   [Inject]
   public IShoppingCartService ShoppingCartService { get; set; }
 
+  [Inject]
+  public IManageCartItemsLocalStorageService ManageCartItemsLocalStorageService { get; set; }
+
   protected IEnumerable<CartItemDto>? ShoppingCartItems { get; set; }
   protected int TotalQty { get; set; }
   protected string PaymentDescription { get; set; }
@@ -21,13 +24,13 @@ public class CheckoutBase : ComponentBase
   {
     try
     {
-      ShoppingCartItems = await ShoppingCartService.GetItemsAsync(HardCoded.UserId);
+      ShoppingCartItems = await ManageCartItemsLocalStorageService.GetCollectionAsync();
 
       if (ShoppingCartItems != null)
       {
         var orderId = Guid.NewGuid();
-        PaymentAmount = ShoppingCartItems.Sum(p => p.TotalPrice);
-        TotalQty = ShoppingCartItems.Sum(p => p.Qty);
+        PaymentAmount = ShoppingCartItems.Sum(static p => p.TotalPrice);
+        TotalQty = ShoppingCartItems.Sum(static p => p.Qty);
         PaymentDescription = $"O_{HardCoded.UserId}_{orderId}";
       }
     }

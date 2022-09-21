@@ -14,7 +14,7 @@ public sealed class ProductRepository : IProductRepository
   }
   public async Task<List<Product>> GetItemsAsync()
   {
-    return await _context.Products.ToListAsync();
+    return await _context.Products.Include(static p => p.ProductCategory).ToListAsync();
   }
   public async Task<List<ProductCategory>> GetCategoriesAsync()
   {
@@ -30,8 +30,9 @@ public sealed class ProductRepository : IProductRepository
   }
   public async Task<List<Product>> GetItemsByCategoryAsync(int categoryId)
   {
-    return await (from product in _context.Products
-      where product.CategoryId == categoryId
-      select product).ToListAsync();
+    return await _context.Products
+      .Where(p => p.CategoryId == categoryId)
+      .Include(p => p.ProductCategory)
+      .ToListAsync();
   }
 }

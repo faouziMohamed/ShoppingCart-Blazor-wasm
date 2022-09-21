@@ -453,13 +453,13 @@ namespace ShopOnline.Api.Migrations
 
             modelBuilder.Entity("ShopOnline.Api.Entities.Product", b =>
                 {
-                    b.HasOne("ShopOnline.Api.Entities.ProductCategory", "Category")
+                    b.HasOne("ShopOnline.Api.Entities.ProductCategory", "ProductCategory")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Category");
+                    b.Navigation("ProductCategory");
                 });
 #pragma warning restore 612, 618
         }

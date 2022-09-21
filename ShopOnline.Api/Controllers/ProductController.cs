@@ -22,15 +22,8 @@ public class ProductController : ControllerBase
     try
     {
       List<Product> products = await _productRepository.GetItemsAsync();
-      List<ProductCategory> productCategories = await _productRepository.GetCategoriesAsync();
-
-      if (!products.Any() || !productCategories.Any())
-      {
-        return NotFound();
-      }
-
-      IEnumerable<ProductDto> productDtos = products.ConverterToDto(productCategories);
-      return Ok(productDtos);
+      if (!products.Any()) return NotFound();
+      return Ok(products.ConverterToDto());
     }
     catch (Exception ex)
     {
@@ -47,15 +40,8 @@ public class ProductController : ControllerBase
     try
     {
       var product = await _productRepository.GetItemByIdAsync(id);
-
-      if (product == null)
-      {
-        return NotFound();
-      }
-
-      var productCategories = await _productRepository.GetCategoryByIdAsync(product.CategoryId);
-      var productDto = product.ConverterToDto(productCategories);
-      return Ok(productDto);
+      if (product == null) return NotFound();
+      return Ok(product.ConverterToDto());
     }
     catch (Exception ex)
     {
@@ -95,7 +81,7 @@ public class ProductController : ControllerBase
         return NotFound();
       }
 
-      IEnumerable<ProductDto> productDtos = products.ConverterToDto(productCategories);
+      IEnumerable<ProductDto> productDtos = products.ConverterToDto();
       return Ok(productDtos);
     }
     catch (Exception ex)
